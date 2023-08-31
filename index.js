@@ -18,7 +18,7 @@ function addLine(dataUser){
                 <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
                     </td>
         </tr>
-    `;
+    `
 
     document.getElementById('table-users').appendChild(tr)
 
