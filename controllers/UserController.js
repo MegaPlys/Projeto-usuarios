@@ -23,23 +23,22 @@ class UserController {
 
     getValues(){
 
-        let user = {}
+        let user = {};
 
-        this.formEl.elements.forEach(function(field, index){
+        [...this.formEl.elements].forEach(function(field, index){
 
-            if (field.name == "gender"){
-                
-                if (field.checked){
+            if (field.name === "gender") {
+    
+                if (field.checked) {
                     user[field.name] = field.value
-        
-                } 
-        
+                }
+    
             } else {
-                
+    
                 user[field.name] = field.value
-        
+    
             }
-        
+    
         });
     
         return new User(
