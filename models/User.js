@@ -2,61 +2,68 @@ class User {
 
     constructor(name, gender, birth, county, email, password, photo, admin){
 
-        this._name = name
-        this._gender = gender
-        this._birth = birth
-        this._county = county
-        this._email = email
-        this._password = password
-        this._photo = photo
-        this._admin = admin
-        this._register = new Date()
+
+        this._id;
+        this._name = name;
+        this._gender = gender;
+        this._birth = birth;
+        this._county = county;
+        this._email = email;
+        this._password = password;
+        this._photo = photo;
+        this._admin = admin;
+        this._register = new Date();
 
     }
 
+    get id(){
+        return this._id;
+    
+    }
+
     get register(){
-        return this._register
+        return this._register;
 
     }
 
     get name(){
-        return this._name
+        return this._name;
     }
 
     get gender(){
-        return this._gender
+        return this._gender;
 
     }
 
     get birth(){
 
-        return this._birth
+        return this._birth;
     }
 
     get county(){
-        return this._county
+        return this._county;
 
     }
 
     get email(){
-        return this._email
+        return this._email;
     
     }
 
     get password(){
-        return this._password
+        return this._password;
     }
 
     get photo(){
-        return this._photo
+        return this._photo;
     }
 
     get admin(){
-        return this._admin
+        return this._admin;
     }
         
     set photo(value){
-        this._photo = value
+        this._photo = value;
     }
 
     loadFromJSON(json){
@@ -75,4 +82,60 @@ class User {
 
         }
     }
+
+    static getusersStorage () {
+
+        let users = [];
+
+        if (localStorage.getItem("users")) {
+
+            users = JSON.parse(localStorage.getItem("users"));
+
+        }
+
+        return users
+
+    }
+    
+    getNewId(){
+
+        if (!window.id) window.id = 0;
+
+        id++;
+
+        return id
+
+    }
+    save(){
+    
+        let users = User.getusersStorage();
+
+        if(this.id > 0) {
+
+            users.map(u=>{
+
+                if (u._id == this.id){
+
+                    Object.assign(u, this)
+
+                }
+                
+                return u;
+
+            })
+
+        } else {
+
+            this._id = this.getNewId()
+
+            
+            users.push(this);
+            
+        }
+        
+        // sessionStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("users", JSON.stringify(users));
+
+    }
 }
+    
