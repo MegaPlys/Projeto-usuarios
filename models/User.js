@@ -98,12 +98,16 @@ class User {
     }
     
     getNewId(){
+        // localStorage guarda item como string, por isso o parseInt pra número
+        let usersID = parseInt(localStorage.getItem("usersID"))
 
-        if (!window.id) window.id = 0;
+        if (!usersID > 0) usersID = 0;
 
-        id++;
+        usersID++;
 
-        return id
+        localStorage.setItem("usersID", usersID);
+
+        return usersID;
 
     }
     save(){
@@ -122,11 +126,11 @@ class User {
                 
                 return u;
 
-            })
+            });
 
         } else {
 
-            this._id = this.getNewId()
+            this._id = this.getNewId();
 
             
             users.push(this);
@@ -134,6 +138,24 @@ class User {
         }
         
         // sessionStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("users", JSON.stringify(users));
+
+    }
+
+    remove(){
+
+        let users = User.getusersStorage();
+
+        users.forEach((userData, index)=>{
+
+            if (this._id == userData._id){
+                        
+                users.splice(index, 1);
+            
+            }
+
+        });
+
         localStorage.setItem("users", JSON.stringify(users));
 
     }
